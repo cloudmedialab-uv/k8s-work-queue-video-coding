@@ -1,0 +1,199 @@
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: cpu-video-coding
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  namespace: cpu-video-coding
+  annotations:
+    k8sidecar.port: SERVICE_PORT
+  labels:
+    datamesh-mqtt: sidecar
+  name: ffmpeg-fn
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: ffmpeg-fn
+  template:
+    metadata:
+      labels:
+        app: ffmpeg-fn
+    spec:
+      containers:
+      - env:
+        - name: RABBITMQ_URL
+          value: "amqp://user:password@rabbitmq-service.cpu-video-coding.svc.cluster.local:5672/"
+        - name: RABBITMQ_QUEUE_NAME
+          value: queue
+        - name: RABBITMQ_EXCHANGE_NAME
+          value: exhange
+        - name: RABBITMQ_ROUTING_KEY
+          value: routing_key
+        - name: RABBITMQ_CONCURRENCY
+          value: "1"
+        - name: SERVICE_PATH
+          value: /ffmpeg-fn
+        - name: PPRIORITY
+          value: "0"
+        - name: PPORT
+          value: "8080"
+        image: routerdi1315.uv.es:33443/sidecar/mqtt-adapter:1.0.13
+        imagePullPolicy: IfNotPresent
+        name: rabbit
+        ports:
+        - containerPort: 8080
+          name: http1
+          protocol: TCP
+        resources: {}
+        terminationMessagePath: /dev/termination-log
+        terminationMessagePolicy: File
+        volumeMounts:
+        - mountPath: /shared
+          name: shared-volume
+      - env:
+        - name: PPRIORITY
+          value: "0"
+        - name: PPORT
+          value: "8081"
+        image: routerdi1315.uv.es:33443/sidecar/datamesh-sidecar:2.0.10
+        imagePullPolicy: IfNotPresent
+        name: datamesh
+        resources: {}
+        volumeMounts:
+        - mountPath: /shared
+          name: shared-volume
+      - env:
+        - name: SERVICE_PORT
+          value: "8082"
+        - name: SERVICE_PATH
+          value: /ffmpeg-fn
+        - name: HEALTH_PATH
+          value: /health
+        - name: METRICS_PATH
+          value: /metrics
+        - name: LOG_LEVEL
+          value: DEBUG
+        image: routerdi1315.uv.es:33443/video-coding/ffmpeg-fn-acc:4.0.3
+        imagePullPolicy: IfNotPresent
+        name: ffmpeg-fn
+        resources:
+            limits:
+              nvidia.com/gpu: '1'
+        volumeMounts:
+        - mountPath: /shared
+          name: shared-volume
+      restartPolicy: Always
+      volumes:
+      - emptyDir: {}
+        name: shared-volume
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: rabbitmq-deployment
+  labels:
+    app: rabbitmq
+  namespace: cpu-video-coding
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: rabbitmq
+  template:
+    metadata:
+      labels:
+        app: rabbitmq
+    spec:
+      containers:
+      - name: rabbitmq
+        image: rabbitmq:3-management
+        env:
+        - name: RABBITMQ_DEFAULT_USER
+          value: "user"
+        - name: RABBITMQ_DEFAULT_PASS
+          value: "password"
+        ports:
+        - containerPort: 5672
+        volumeMounts:
+            - name: rabbitmq-config
+              mountPath: /etc/rabbitmq
+      volumes:
+        - name: rabbitmq-config
+          configMap:
+            name: rabbitmq-configmap 
+---
+kind: Service
+apiVersion: v1
+metadata:
+  name: rabbitmq-service
+  namespace: cpu-video-coding
+spec:
+  type: NodePort
+  selector:
+    app: rabbitmq
+  ports:
+  - port: 5672
+    nodePort: 32672
+    targetPort: 5672
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: rabbitmq-configmap
+  namespace: cpu-video-coding
+data:
+  rabbitmq.conf: |-
+    consumer_timeout = 18000000
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: upload-deployment
+  labels:
+    app: upload
+  namespace: cpu-video-coding
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: upload
+  template:
+    metadata:
+      labels:
+        app: upload
+    spec:
+      containers:
+      - name: upload
+        image: routerdi1315.uv.es:33443/upload-tomcat-service:10.0.5
+        env:
+        - name: GET_ENABLED
+          value: "true"
+        - name: BASE_PATH
+          value: "/upload"
+        - name: LOG_LEVEL
+          value: "DEBUG"
+        - name: METRICS_PATH
+          value: "/metrics"
+        - name: HEALTH_PATH
+          value: "/health"
+        - name: MAX_REQUEST_THRESHOLD
+          value: "126976"
+        ports:
+        - containerPort: 8080
+---
+kind: Service
+apiVersion: v1
+metadata:
+  name: upload-service
+  namespace: cpu-video-coding
+spec:
+  type: NodePort
+  selector:
+    app: upload
+  ports:
+  - port: 8080
+    nodePort: 31808
+    targetPort: 8080

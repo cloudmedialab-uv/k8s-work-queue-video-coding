@@ -119,7 +119,10 @@ Once inside the container, navigate to the upload directory and list the content
 cd upload
 ls
 ```
---- Expected Output ---
+--- 
+Expected Output
+---
+
 ```
 out.mp4 times.json
 ```

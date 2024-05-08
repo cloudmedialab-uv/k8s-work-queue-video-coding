@@ -53,7 +53,7 @@ def publish(msg):
         )
 
 
-ffmpeg_cmd = "-i bbb_30fps_640x360_800k.mp4 -c:v libx264 out.mp4"
+ffmpeg_cmd = "-i bbb_30fps_640x360_800k.mp4 -c:v h264_nvenc out.mp4"
 output_files = ["out.mp4"]
 input_files = ["https://dash.akamaized.net/akamai/bbb_30fps/bbb_30fps_640x360_800k.mp4"]
 
