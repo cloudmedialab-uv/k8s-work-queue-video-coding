@@ -40,7 +40,7 @@ spec:
           value: "0"
         - name: PPORT
           value: "8080"
-        image: routerdi1315.uv.es:33443/sidecar/mqtt-adapter:1.0.13
+        image: cloudmedialab/amqp-adapter:1.0.0
         imagePullPolicy: IfNotPresent
         name: rabbit
         ports:
@@ -58,7 +58,7 @@ spec:
           value: "0"
         - name: PPORT
           value: "8081"
-        image: routerdi1315.uv.es:33443/sidecar/datamesh-sidecar:2.0.10
+        image: cloudmedialab/datamesh-sidecar:1.0.0
         imagePullPolicy: IfNotPresent
         name: datamesh
         resources: {}
@@ -76,7 +76,7 @@ spec:
           value: /metrics
         - name: LOG_LEVEL
           value: DEBUG
-        image: routerdi1315.uv.es:33443/video-coding/ffmpeg-fn-acc:4.0.3
+        image: cloudmedialab/ffmpeg-fn:1.0.0
         imagePullPolicy: IfNotPresent
         name: ffmpeg-fn
         resources:
@@ -167,7 +167,7 @@ spec:
     spec:
       containers:
       - name: upload
-        image: routerdi1315.uv.es:33443/upload-tomcat-service:10.0.5
+        image: cloudmedialab/upload-tomcat-service:3.0.0
         env:
         - name: GET_ENABLED
           value: "true"
