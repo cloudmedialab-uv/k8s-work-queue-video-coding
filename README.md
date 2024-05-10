@@ -84,7 +84,6 @@ This section provides a complete example of setting up and running the CPU-only 
 Before proceeding with the example, ensure you have the following tools installed and configured:
 
 - **Minikube**: Used to create a local Kubernetes cluster. [Install Minikube](https://minikube.sigs.k8s.io/docs/start/).
-- **kubectl**: A command-line tool for interacting with Kubernetes clusters. [Install kubectl](https://kubernetes.io/docs/tasks/tools/).
 - **Python**: Required to run the test scripts. Make sure Python is installed along with pip to handle package installations. [Install Python](https://www.python.org/downloads/).
 
 1. **Start Minikube**:
@@ -95,7 +94,7 @@ minikube start
 2. **Deploy the infrastructure**:
 Apply the CPU infrastructure YAML to set up the environment.
 ```
-kubectl apply -f deploy/cpu/infrastructure.yaml
+minikube kubectl -- apply -f deploy/cpu/infraestructure.yml
 ```
 3. **Install Python dependencies**:
 Install the required Python libraries needed for the test script.
@@ -107,21 +106,36 @@ Execute the Python test script using the IP address of your Minikube cluster.
 ```
 python3 test/cpu.py $(minikube ip)
 ```
-5. **Access the upload container**:
+5. **Check status**:
+Run to check the video codify status by accessing to container logs
+```
+minikube kubectl -- logs deployment/ffmpeg-fn --namespace cpu-video-coding --container datamesh
+```
+
+####  Expected output when video codify end
+
+```
+2024/05/10 08:31:03 Folder name: 1715329863417
+2024/05/10 08:31:03 &{[https://dash.akamaized.net/akamai/bbb_30fps/bbb_30fps_640x360_800k.mp4] [out.mp4] http://192.168.49.2:31808/upload times.json}
+2024/05/10 08:33:50 Uploading results...
+2024/05/10 08:33:50 file /shared/1715329863417/out.mp4 uploading
+2024/05/10 08:33:51 Upload completed successfully.
+2024/05/10 08:33:51 Uploading times...
+```
+6. **Access the upload container**:
 Connect to the upload container where the encoded video is stored.
 ```
-kubectl exec -it deployment/upload-deployment --namespace cpu-video-coding -- /bin/sh
+minikube kubectl -- exec -it deployment/upload-deployment --namespace cpu-video-coding -- /bin/sh
 ```
-6. **Check the output**:
+7. **Check the output**:
 Once inside the container, navigate to the upload directory and list the contents to verify the output.
 
 ```
 cd upload
 ls
 ```
---- 
-Expected Output
----
+
+#### Expected Output
 
 ```
 out.mp4 times.json
