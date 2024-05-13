@@ -1,6 +1,6 @@
 # k8s-work-queue-video-coding
 
-This project deploys a distributed video encoding infrastructure capable of utilizing both GPU-supported and CPU-only clusters. Depending on the available resources, the deployment can be optimized for hardware with GPU capabilities or solely rely on CPU power.
+This project deploys a distributed video encoding infrastructure capable of utilizing both GPU-supported and CPU clusters. Depending on the available resources, the deployment can be optimized for hardware with GPU capabilities or solely rely on CPU power.
 
 ## Table of Contents
 
@@ -127,7 +127,7 @@ Run to check the video codify status by accessing to container logs
 minikube kubectl -- logs deployment/ffmpeg-fn --namespace cpu-video-coding --container datamesh
 ```
 
-####  Expected output when video codify end
+####  Expected output when video codify ends
 
 ```
 2024/05/10 08:31:03 Folder name: 1715329863417
@@ -156,7 +156,6 @@ ls
 out.mp4 times.json
 ```
 
-This walkthrough guides you through starting the environment, running the encoding process, and verifying the results in the upload directory.
 
 
 ## Citing
@@ -164,15 +163,11 @@ This walkthrough guides you through starting the environment, running the encodi
 If you use this infrastructure in your research or commercial project, please consider citing it:
 
 ```bib
-@article{Moina2023-vqmtk,
-authors={Wilmer Moina-Rivera and Juan Gutiérrez-Aguado and Miguel Garcia-Pineda},
-journal={SoftwareX},
+@inproceedings{Salcedo-Navarro-2024a,
+authors={Salcedo Navarro, Andoni and Peña-Ortiz, Raúl and Claver, José M., and Garcia-Pineda, Miguel and Gutiérrez Aguado, Juan},
+title={Cloud-native GPU-enabled architecture for parallel video encoding}
+booktitle = {30th International European Conference on Parallel and Distributed Computing (Euro-Par)},
 title={Video Quality Metrics Toolkit: An Open Source Software to Assess Video Quality},
-volume = {23},
-pages = {101427},
-year = {2023},
-issn = {2352-7110},
-doi={10.1016/j.softx.2023.101427},
-url={https://doi.org/10.1016/j.softx.2023.101427}
+year = {2024}
 }
 ```
