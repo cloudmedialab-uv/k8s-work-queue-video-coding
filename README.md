@@ -161,7 +161,7 @@ out.mp4 times.json
 
 ## Citing
 
-If you use this infrastructure in your research or commercial project, please consider citing it:
+If you use this infrastructure please cite it as follows:
 
 ```bib
 @inproceedings{Salcedo-Navarro-2024a,
