@@ -49,13 +49,13 @@ Depending on your cluster's capabilities (GPU or CPU), apply the appropriate Kub
 - **For GPU-supported clusters**:
 
 ```
-kubectl apply -f deploy/gpu/infrastructure.yaml
+kubectl apply -f deploy/gpu/infrastructure.yml
 ```
 
 - **For CPU-only clusters**
 
 ```
-kubectl apply -f deploy/cpu/infrastructure.yaml
+kubectl apply -f deploy/cpu/infraestructure.yml
 ```
 
 ## Testing
