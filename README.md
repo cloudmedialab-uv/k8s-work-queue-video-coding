@@ -119,7 +119,7 @@ Install the required Python libraries needed for the test script.
 pip install -r test/requirements.txt
 ```
 ### 5. **Run the test script**:
-Execute the Python test script using the IP address of your Minikube cluster (or put the IP of your Kubernetes cluster). The script sends a message to RabbitMQ to encode a video. See the source code of [[test/cpu.py]] to see the details of the JSON message.
+Execute the Python test script using the IP address of your Minikube cluster (or put the IP of your Kubernetes cluster). The script sends a message to RabbitMQ to encode a video. See the source code of [test/cpu.py](test/cpu.py) to see the details of the JSON message.
 ```
 python3 test/cpu.py $(minikube ip)
 ```
