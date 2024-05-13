@@ -128,36 +128,50 @@ python3 test/cpu.py $(minikube ip)
 ### 6. **Check status**:
 Run to check the video codify status by accessing to container logs
 ```
-minikube kubectl -- logs deployment/ffmpeg-fn --namespace cpu-video-coding --container datamesh
+minikube kubectl -- logs deployment/ffmpeg-fn --namespace cpu-video-coding --container ffmpeg-fn
 ```
 
-####  Expected output when video codify ends
+####  Expected output that shows the encoding perfomed
 
 ```
-2024/05/10 08:31:03 Folder name: 1715329863417
-2024/05/10 08:31:03 &{[https://dash.akamaized.net/akamai/bbb_30fps/bbb_30fps_640x360_800k.mp4] [out.mp4] http://192.168.49.2:31808/upload times.json}
-2024/05/10 08:33:50 Uploading results...
-2024/05/10 08:33:50 file /shared/1715329863417/out.mp4 uploading
-2024/05/10 08:33:51 Upload completed successfully.
-2024/05/10 08:33:51 Uploading times...
+024/05/13 13:34:14 /shared/1715607241928
+2024/05/13 13:34:14 Job: {-i bbb_30fps_640x360_800k.mp4 -c:v libx264 out.mp4}
+2024/05/13 13:34:14 Performing ffmpeg job...
+2024/05/13 13:34:14 ffmpeg command: ffmpeg -hide_banner -v quiet -nostats -i bbb_30fps_640x360_800k.mp4 -c:v libx264 out.mp4
 ```
-### 7. **Access the upload container**:
-Connect to the upload container where the encoded video is stored.
+### 7. **List files in upload container**:
+Connect to the upload container where the encoded video is stored.an list files in /app/upload folder.
 ```
-minikube kubectl -- exec -it deployment/upload-deployment --namespace cpu-video-coding -- /bin/sh
+minikube kubectl -- exec -it deployment/upload-deployment --namespace cpu-video-coding -- ls /app/upload
 ```
-### 8. **Check the output**:
-Once inside the container, navigate to the upload directory and list the contents to verify the output.
-
+### 8. **See contents of times file**
 ```
-cd upload
-ls
+minikube kubectl -- exec deployment/upload-deployment --namespace cpu-video-coding -- cat /app/upload/times.json
 ```
 
-#### Expected Output
+#### Sample Output
+This is a formated output (using jq):
 
 ```
-out.mp4 times.json
+{
+  "job": {
+    "downloadFiles": [
+      "https://dash.akamaized.net/akamai/bbb_30fps/bbb_30fps_640x360_800k.mp4"
+    ],
+    "uploadFiles": [
+      "out.mp4"
+    ],
+    "uploadUrl": "http://192.168.56.3:31808/upload",
+    "timesFile": "times.json"
+  },
+  "tsEventGeneratedTime": 1715607241928,
+  "tsReceivedTime": 1715607241931,
+  "tsFinalTime": 1715607422020,
+  "downloadTime": 12070,
+  "processTime": 165935,
+  "uploadTime": 2084,
+  "container": "ffmpeg-fn-5dfc678bf7-lx8df"
+}
 ```
 
 
