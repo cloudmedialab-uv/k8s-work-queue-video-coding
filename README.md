@@ -27,7 +27,7 @@ It is recommended to verify the compatibility of your system and the required so
 1. **Clone the repository**:
 
 ```
-git clone git@github.com:cloudmedialab-uv/k8s-work-queue-video-coding.git
+git clone github.com:cloudmedialab-uv/k8s-work-queue-video-coding.git
 cd k8s-work-queue-video-coding
 ```
 
