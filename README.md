@@ -49,13 +49,13 @@ Depending on your cluster's capabilities (GPU or CPU), apply the appropriate Kub
 - **For GPU-supported clusters**:
 
 ```
-kubectl apply -f /deploy/gpu/infrastructure.yaml
+kubectl apply -f deploy/gpu/infrastructure.yaml
 ```
 
 - **For CPU-only clusters**
 
 ```
-kubectl apply -f /deploy/cpu/infrastructure.yaml
+kubectl apply -f deploy/cpu/infrastructure.yaml
 ```
 
 ## Testing
@@ -68,11 +68,11 @@ After deploying the appropriate infrastructure, proceed with the following steps
 2. **Run the test scripts**:
  - For GPU:
    ```
-   python /test/gpu.py <kubernetes_cluster_ip>
+   python test/gpu.py <kubernetes_cluster_ip>
    ```
  - For CPU:
    ```
-   python /test/cpu.py <kubernetes_cluster_ip>
+   python test/cpu.py <kubernetes_cluster_ip>
    ```
 
 3. **Verify the output**:
