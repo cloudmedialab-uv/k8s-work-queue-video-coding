@@ -161,7 +161,7 @@ This is a formated output (using jq):
     "uploadFiles": [
       "out.mp4"
     ],
-    "uploadUrl": "http://192.168.56.3:31808/upload",
+    "uploadUrl": "http://MINIKUBE_IP:31808/upload",
     "timesFile": "times.json"
   },
   "tsEventGeneratedTime": 1715607241928,
