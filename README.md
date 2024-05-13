@@ -171,7 +171,6 @@ If you use this infrastructure please cite it as follows:
 authors={Salcedo Navarro, Andoni and Peña-Ortiz, Raúl and Claver, José M., and Garcia-Pineda, Miguel and Gutiérrez Aguado, Juan},
 title={Cloud-native GPU-enabled architecture for parallel video encoding}
 booktitle = {30th International European Conference on Parallel and Distributed Computing (Euro-Par)},
-title={Video Quality Metrics Toolkit: An Open Source Software to Assess Video Quality},
 year = {2024}
 }
 ```
