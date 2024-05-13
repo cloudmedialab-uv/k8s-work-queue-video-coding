@@ -1,6 +1,7 @@
 # k8s-work-queue-video-coding
 
 This project deploys a distributed video encoding infrastructure capable of utilizing both GPU-supported and CPU clusters. Depending on the available resources, the deployment can be optimized for hardware with GPU capabilities or solely rely on CPU power.
+Each encoding job encapsulated in a JSON message and is sent to RabbitMQ (that is also deployed inside Kubernetes). The message contains information about the videos to be downloaded and where the encoded videos and files with times should be uploaded. The messages from the RabbitMQ queue are consumed by Pods (managed by a deployment) that perform the encoding.
 
 ## Table of Contents
 
