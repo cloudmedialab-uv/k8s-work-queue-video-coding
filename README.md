@@ -79,7 +79,7 @@ After deploying the appropriate infrastructure, proceed with the following steps
  Check the upload container within the infrastructure to ensure that the video has been encoded and uploaded successfully.
 
 
-## Full Example
+## Full Example using minikube
 
 This section provides a complete example of setting up and running the CPU-only video encoding infrastructure using Minikube.
 
