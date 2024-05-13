@@ -3,7 +3,7 @@ import json
 import pika
 
 if len(sys.argv) < 2:
-    print("No se proporcionó una dirección IP.")
+    print("The IP of Kubernetes is required")
     exit()
 
 k8s_ip = sys.argv[1]
