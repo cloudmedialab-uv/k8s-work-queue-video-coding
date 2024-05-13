@@ -152,7 +152,7 @@ minikube kubectl -- exec deployment/upload-deployment --namespace cpu-video-codi
 #### Sample Output
 This is a formated output (using jq):
 
-```
+```json
 {
   "job": {
     "downloadFiles": [
