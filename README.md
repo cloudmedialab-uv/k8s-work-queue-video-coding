@@ -2,7 +2,9 @@
 
 This project deploys a distributed video encoding infrastructure capable of utilizing both GPU-supported and CPU clusters. Depending on the available resources, the deployment can be optimized for hardware with GPU capabilities or solely rely on CPU power. These artifacts are the same as those used to obtain the results presented in our [Euro-Par 2024 paper](#citing). 
 
-Each encoding job encapsulated in a JSON message and is sent to RabbitMQ (that is also deployed inside Kubernetes). The message contains information about the videos to be downloaded and where the encoded videos and files with times should be uploaded. The messages from the RabbitMQ queue are consumed by Pods (managed by a deployment) that perform the encoding.
+Each encoding job encapsulated in a JSON message and is sent to RabbitMQ (that is also deployed inside Kubernetes). The message contains information about the videos to be downloaded and where the encoded videos and files with times should be uploaded. The messages from the RabbitMQ queue are consumed by Pods (managed by a deployment) that perform the encoding. 
+
+Please, be aware that the YAML files contains credentials that should be changed.
 
 ## Table of Contents
 
