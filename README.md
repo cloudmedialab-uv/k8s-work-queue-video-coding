@@ -181,10 +181,23 @@ This is a formated output (using jq):
 If you use this infrastructure please cite it as follows:
 
 ```bib
-@inproceedings{Salcedo-Navarro-2024a,
-authors={Salcedo-Navarro, Andoni and Peña-Ortiz, Raúl and Claver, José M., and Garcia-Pineda, Miguel and Gutiérrez-Aguado, Juan},
-title={Cloud-native GPU-enabled architecture for parallel video encoding}
-booktitle = {30th International European Conference on Parallel and Distributed Computing (Euro-Par)},
-year = {2024}
+@InProceedings{10.1007/978-3-031-69583-4_23,
+author="Salcedo-Navarro, Andoni
+and Pe{\~{n}}a-Ortiz, Ra{\'u}l
+and Claver, Jos{\'e} M.
+and Garcia-Pineda, Miguel
+and Guti{\'e}rrez-Aguado, Juan",
+editor="Carretero, Jesus
+and Shende, Sameer
+and Garcia-Blas, Javier
+and Brandic, Ivona
+and Olcoz, Katzalin
+and Schreiber, Martin",
+title="Cloud-Native GPU-Enabled Architecture for Parallel Video Encoding",
+booktitle="Euro-Par 2024: Parallel Processing",
+year="2024",
+publisher="Springer Nature Switzerland",
+pages="327--341",
+isbn="978-3-031-69583-4"
 }
 ```
